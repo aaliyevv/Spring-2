@@ -15,6 +15,30 @@ public class UserService {
         this.appUserRepository = appUserRepository;
     }
 
-    
+    public AppUser create(AppUser UserEntity){
+        return appUserRepository.save(UserEntity);
+    }
+
+    public List<AppUser> getAll(){
+        return appUserRepository.findAll();
+    }
+
+    public AppUser getById(Long id){
+        return appUserRepository.getById(id);
+    }
+
+    public AppUser update(Long id, AppUser UserEntity){
+        AppUser oldUser = appUserRepository.findById(id).orElseThrow(() ->
+        new RuntimeException("User Not Found!"));
+
+        oldUser.setUsername(UserEntity.getUsername());
+        oldUser.setSurname(UserEntity.getSurname());
+
+        return appUserRepository.save(oldUser);
+    }
+
+    public void deleteById(Long id){
+        appUserRepository.deleteById(id);
+    }
 
 }
